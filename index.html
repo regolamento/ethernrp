@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regolamento EthernRP — 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #090401;
+    --bg2: #130700;
+    --bg3: #1c0c02;
+    --accent: #ff7a1a;
+    --accent2: #ff3333;
+    --accent3: #ffb347;
+    --text: #e8d0b8;
+    --text-dim: #7a5535;
+    --border: #2d1505;
+    --glow: rgba(255,120,20,0.18);
+    --glow2: rgba(255,51,51,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.04) 2px,
+      rgba(0,0,0,0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    text-align: center;
+    padding: 80px 20px 60px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 70% at 50% 60%, rgba(180,55,0,0.6) 0%, transparent 65%),
+      radial-gradient(ellipse 100% 100% at 50% 50%, rgba(60,15,0,0.85) 0%, transparent 100%);
+  }
+
+  .header-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 16px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 12vw, 120px);
+    letter-spacing: 8px;
+    color: #fff;
+    line-height: 0.9;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .logo span {
+    color: var(--accent);
+    text-shadow: 0 0 40px rgba(232,200,74,0.6), 0 0 80px rgba(232,200,74,0.2);
+  }
+
+  .header-subtitle {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 6px;
+    margin-top: 16px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .version-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,200,74,0.08);
+    border: 1px solid rgba(232,200,74,0.3);
+    color: var(--accent);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    padding: 6px 16px;
+    margin-top: 24px;
+    letter-spacing: 2px;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .version-badge::before {
+    content: '●';
+    font-size: 8px;
+    animation: blink 1.5s infinite;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8, 11, 16, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  nav::-webkit-scrollbar { display: none; }
+
+  .nav-inner {
+    display: flex;
+    gap: 0;
+    min-width: max-content;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  nav a {
+    display: block;
+    padding: 14px 18px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px 100px;
+  }
+
+  /* SECTIONS */
+  section {
+    margin-bottom: 80px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .section-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    opacity: 0.6;
+    min-width: 40px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: 3px;
+    color: #fff;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-top: 4px;
+  }
+
+  /* DEFINITION CARDS */
+  .definitions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  .def-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .def-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--glow), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .def-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 20px var(--glow);
+  }
+
+  .def-card:hover::before { opacity: 1; }
+
+  .def-term {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .def-desc {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* RULE BLOCKS */
+  .rule-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .rule-block:hover {
+    border-color: rgba(232,200,74,0.3);
+  }
+
+  .rule-block h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .rule-block h3::before {
+    content: '▶';
+    font-size: 8px;
+    opacity: 0.6;
+  }
+
+  .rule-block p, .rule-block li {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .rule-block ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .rule-block ul li {
+    padding: 4px 0 4px 20px;
+    position: relative;
+  }
+
+  .rule-block ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-dim);
+  }
+
+  /* ALERT BOXES */
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    border: 1px solid;
+  }
+
+  .alert-danger {
+    background: rgba(255,77,77,0.06);
+    border-color: rgba(255,77,77,0.3);
+  }
+
+  .alert-info {
+    background: rgba(77,170,255,0.06);
+    border-color: rgba(77,170,255,0.3);
+  }
+
+  .alert-warning {
+    background: rgba(232,200,74,0.06);
+    border-color: rgba(232,200,74,0.3);
+  }
+
+  .alert-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .alert-danger .alert-icon { color: var(--accent2); }
+  .alert-info .alert-icon { color: var(--accent3); }
+  .alert-warning .alert-icon { color: var(--accent); }
+
+  .alert-title {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .alert-danger .alert-title { color: var(--accent2); }
+  .alert-info .alert-title { color: var(--accent3); }
+  .alert-warning .alert-title { color: var(--accent); }
+
+  .alert p { font-size: 14px; color: var(--text); line-height: 1.6; }
+
+  /* TABLES */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 24px 0;
+    border: 1px solid var(--border);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  thead {
+    background: var(--bg3);
+    border-bottom: 2px solid var(--accent);
+  }
+
+  th {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding: 14px 20px;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: middle;
+  }
+
+  tr:hover td {
+    background: rgba(232,200,74,0.03);
+  }
+
+  td strong { color: #fff; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: 1px solid;
+    border-radius: 2px;
+  }
+
+  .badge-yes { color: #4dff88; border-color: #4dff88; background: rgba(77,255,136,0.08); }
+  .badge-no { color: var(--accent2); border-color: var(--accent2); background: rgba(255,77,77,0.08); }
+  .badge-any { color: var(--accent3); border-color: var(--accent3); background: rgba(77,170,255,0.08); }
+
+  /* COLUMNS LAYOUT */
+  .cols-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) { .cols-2 { grid-template-columns: 1fr; } }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 60px 0;
+  }
+
+  /* INLINE HIGHLIGHT */
+  .hl { color: var(--accent); font-weight: 700; }
+  .hl-red { color: var(--accent2); font-weight: 700; }
+  .hl-blue { color: var(--accent3); font-weight: 700; }
+
+  /* FACTION HEADER */
+  .faction-header {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent3);
+    padding: 24px 28px;
+    margin-bottom: 16px;
+  }
+
+  .faction-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .faction-name span { color: var(--accent3); }
+
+  .faction-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  footer p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  footer .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.1);
+    margin-bottom: 12px;
+  }
+
+  footer .footer-logo span { color: rgba(232,200,74,0.3); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  /* BACK TO TOP */
+  .btt {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--bg2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.2s;
+    z-index: 500;
+  }
+
+  .btt:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  #ember-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .header-logo {
+    width: clamp(240px, 38vw, 440px);
+    filter: drop-shadow(0 0 30px rgba(255,100,0,0.75)) drop-shadow(0 0 70px rgba(255,50,0,0.35));
+    animation: fadeUp 0.9s ease 0.1s both;
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin: 0 auto;
+  }
+
+  header .header-tag,
+  header .header-subtitle,
+  header span.version-badge {
+    position: relative;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<canvas id="ember-canvas"></canvas>
+<header>
+  <div class="header-tag">// DOCUMENTO UFFICIALE — SERVER GTA RP</div>
+  <img src="data:image/webp;base64,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" alt="EthernRP V4" class="header-logo" />
+  <div class="header-subtitle">Regolamento Ufficiale del Server</div>
+  <div><span class="version-badge">VERSIONE 21 / 03 / 2026 — AGGIORNATO</span></div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#definizioni">Definizioni</a>
+    <a href="#assistenze">Assistenze</a>
+    <a href="#generale">Generale</a>
+    <a href="#permadeath">Permadeath</a>
+    <a href="#veicoli">Veicoli</a>
+    <a href="#rapimenti">Rapimenti</a>
+    <a href="#freeroam">Freeroam</a>
+    <a href="#safezone">Safe Zone</a>
+    <a href="#assalti">Assalti</a>
+    <a href="#rapine">Rapine</a>
+    <a href="#droga">Zone Rosse</a>
+    <a href="#fazioni">Fazioni</a>
+    <a href="#gang">Gang</a>
+    <a href="#fdo">FDO</a>
+    <a href="#altro">Altro</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- CHANGELOG -->
+<section id="changelog" style="margin-bottom:60px;">
+  <div class="section-header">
+    <span class="section-number" style="color:#ff3333">CL</span>
+    <h2 class="section-title" style="color:#ff7a1a">Changelog Regolamento</h2>
+  </div>
+ 
+  <div style="border:1px solid rgba(255,51,51,0.35);background:rgba(20,5,0,0.7);padding:24px 28px;margin-bottom:16px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,51,51,0.06),transparent);pointer-events:none;"></div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap;">
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:#ff3333;">#6</span>
+      <span style="font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(255,120,20,0.7);border:1px solid rgba(255,120,20,0.3);padding:3px 10px;">23 / 03 / 2026</span>
+      <span style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;color:#ff7a1a;text-transform:uppercase;">Regolamento EthernRP — Update</span>
+    </div>
+    <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;">
+      <li style="padding:10px 14px 10px 36px;position:relative;background:rgba(255,51,51,0.05);border-left:3px solid #ff3333;">
+        <span style="position:absolute;left:10px;top:14px;color:#ff3333;font-size:10px;">●</span>
+        <span style="font-family:'Rajdhani',sans-serif;font-size:15px;color:#e8d0b8;line-height:1.6;">Il <strong style="color:#ff7a1a;">perma</strong> va eseguito <strong style="color:#ff7a1a;">esclusivamente</strong> tramite <strong style="color:#ff7a1a;">pillola della memoria</strong>.</span>
+      </li>
+      <li style="padding:10px 14px 10px 36px;position:relative;background:rgba(255,51,51,0.05);border-left:3px solid #ff3333;">
+        <span style="position:absolute;left:10px;top:14px;color:#ff3333;font-size:10px;">●</span>
+        <span style="font-family:'Rajdhani',sans-serif;font-size:15px;color:#e8d0b8;line-height:1.6;">La <strong style="color:#ff7a1a;">conclusione</strong> dell'azione <strong style="color:#ff3333;">non deve</strong> essere comunicata tramite <strong style="color:#ff7a1a;">anon</strong> o <strong style="color:#ff7a1a;">altri mezzi</strong>, ma solo con i <strong style="color:#ff7a1a;">comandi dedicati</strong>:</span>
+      </li>
+    </ul>
+    <div style="margin:12px 0 4px 36px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,120,20,0.25);padding:10px 16px;font-family:'Share Tech Mono',monospace;font-size:13px;color:#ff7a1a;letter-spacing:1px;">
+      /azione1 &nbsp;/azione2 &nbsp;/azione3 &nbsp;&nbsp;oppure&nbsp;&nbsp; /full1 &nbsp;/full2 &nbsp;/full3
+    </div>
+    <div style="margin:10px 0 0 36px;display:flex;align-items:flex-start;gap:10px;background:rgba(255,51,51,0.08);border:1px solid rgba(255,51,51,0.3);padding:10px 14px;">
+      <span style="color:#ff3333;font-size:16px;flex-shrink:0;">&#9888;</span>
+      <span style="font-family:'Rajdhani',sans-serif;font-size:14px;color:#e8d0b8;line-height:1.6;">Se questi comandi <strong style="color:#ff3333;">non vengono</strong> utilizzati, l'azione <strong style="color:#ff3333;">non è da considerarsi conclusa</strong>.</span>
+    </div>
+  </div>
+</section>
+
+<!-- DEFINIZIONI -->
+<section id="definizioni">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Definizioni & Terminologia</h2>
+  </div>
+  <div class="definitions-grid">
+    <div class="def-card"><div class="def-term">FAILRP</div><div class="def-desc">Azione o discorso che non rispetta le regole RP o la coerenza del personaggio.</div></div>
+    <div class="def-card"><div class="def-term">REVENGE KILL (RK)</div><div class="def-desc">Uccidere per vendetta un player che ti ha precedentemente ucciso dopo lo spawn in ospedale.</div></div>
+    <div class="def-card"><div class="def-term">VDM</div><div class="def-desc">Usare un veicolo o velivolo con lo scopo di investire o arrecare danni ai players.</div></div>
+    <div class="def-card"><div class="def-term">RDM</div><div class="def-desc">Uccidere senza motivo valido e senza contesto RP. Prima di ingaggiare è strettamente consigliato interagire con il player.</div></div>
+    <div class="def-card"><div class="def-term">POWERGAME</div><div class="def-desc">Compiere azioni impossibili nella realtà.</div></div>
+    <div class="def-card"><div class="def-term">SPAM & TROLLING</div><div class="def-desc">Pubblicizzare altri server o interagire con messaggi provocatori/fuori tema per disturbare la comunicazione.</div></div>
+    <div class="def-card"><div class="def-term">METAGAME OOC</div><div class="def-desc">Usare informazioni ricavate Out of Character per sfruttarle In Character.</div></div>
+    <div class="def-card"><div class="def-term">METAGAME IC</div><div class="def-desc">Come il MetaGame OOC, ma usando informazioni IC senza contesto RP adeguato.</div></div>
+    <div class="def-card"><div class="def-term">STREAM SNIPING</div><div class="def-desc">Guardare uno stream per prendere informazioni e usarle in RP. Sottocategoria del MetaGame.</div></div>
+    <div class="def-card"><div class="def-term">NOFEAR</div><div class="def-desc">Non simulare paura o emozioni coerenti alla situazione (es. non scappare quando viene puntata un'arma).</div></div>
+    <div class="def-card"><div class="def-term">POWERPLAY</div><div class="def-desc">Inventarsi tecnologie o attrezzature non presenti in game o nell'azione specifica.</div></div>
+    <div class="def-card"><div class="def-term">BUNNY HOP</div><div class="def-desc">Saltare ripetutamente e inverosimilmente senza motivo o per agevolarsi in un'azione.</div></div>
+    <div class="def-card"><div class="def-term">CAR SURF</div><div class="def-desc">Restare in piedi o seduti al di sopra di un veicolo in movimento.</div></div>
+    <div class="def-card"><div class="def-term">CARJACK</div><div class="def-desc">Rubare un veicolo senza una scena RP strutturata.</div></div>
+    <div class="def-card"><div class="def-term">COMBATLOG-IN / OUT</div><div class="def-desc">Effettuare login durante un'azione già iniziata, o disconnettersi nel mezzo di un'azione.</div></div>
+    <div class="def-card"><div class="def-term">MIXCHAT</div><div class="def-desc">Usare la chat OOC come IC e viceversa.</div></div>
+    <div class="def-card"><div class="def-term">CARKILL</div><div class="def-desc">Stazionare sopra una persona ferita con un veicolo. Diverso dal VDM.</div></div>
+    <div class="def-card"><div class="def-term">BACKSITTING</div><div class="def-desc">Prendere consigli esterni all'RP per portare a termine un'azione o attuare un atteggiamento.</div></div>
+    <div class="def-card"><div class="def-term">PUBBLICITÀ ANTI-RP</div><div class="def-desc">Pubblicità OOC o che attirerebbe troppa attenzione (es: "Offro lavoro ILLEGALE", "Cerco gang").</div></div>
+    <div class="def-card"><div class="def-term">BUG ABUSING</div><div class="def-desc">Abuso di bug del gioco. HG (Head Glitch) durante sparatorie è considerato Bug Abusing.</div></div>
+    <div class="def-card"><div class="def-term">FAKE RP</div><div class="def-desc">Fingersi dipendente o membro di una fazione whitelist senza farne effettivamente parte.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ASSISTENZE -->
+<section id="assistenze">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Gestione Assistenze</h2>
+  </div>
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Requisiti</h3>
+      <ul>
+        <li>Necessaria <span class="hl">clip video</span> per richiedere assistenza per un'azione.</li>
+        <li>L'azione deve essere <span class="hl">conclusa</span> prima di richiedere assistenza.</li>
+        <li>Non sono ammesse clip di terzi salvo se il registrante era presente nell'azione.</li>
+        <li>Ogni oggetto depositato in auto non verrà rimborsato in caso di despawn.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Comportamento</h3>
+      <ul>
+        <li>Obbligo di rispetto verso lo staff e gli altri utenti.</li>
+        <li>Uno staffer coinvolto nell'azione non può valutarla.</li>
+        <li>Per rimborsi: ticket con prove video/screenshot.</li>
+        <li>L'esito può essere rivalutato da un Admin; se invariato, sanzione aggiuntiva.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="alert alert-warning">
+    <span class="alert-icon">⚠</span>
+    <div>
+      <div class="alert-title">Warn Fazione</div>
+      <p>I warn fazione vengono applicati quando 3 o più persone della stessa fazione compiono il medesimo fail nella stessa azione.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GENERALE -->
+<section id="generale">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <h2 class="section-title">Regolamento Generale</h2>
+  </div>
+
+  <div class="alert alert-danger">
+    <span class="alert-icon">🚫</span>
+    <div>
+      <div class="alert-title">Tolleranza Zero</div>
+      <p>Parole razziste, mancanza di educazione o offese sessuali — Sanzione: <strong>BAN PERMANENTE</strong>.</p>
+    </div>
+  </div>
+
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Identità & Personaggio</h3>
+      <ul>
+        <li>Vietato usare la <span class="hl">skin iniziale</span>.</li>
+        <li>Niente <span class="hl">caratteri speciali</span> su Discord e in game.</li>
+        <li>Solo italiano e inglese (pena: Warn).</li>
+        <li>Parentele solo se riportate nel proprio <span class="hl">background</span>.</li>
+        <li>Vietata qualsiasi azione illegale nei primi <span class="hl">15 minuti</span> di log.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>NLR — New Life Rule</h3>
+      <ul>
+        <li>Dopo respawn in ospedale: <span class="hl">non ci si ricorda dell'accaduto</span>.</li>
+        <li>Eccezione: testimoni oculari o GoPro.</li>
+        <li>Rianimati da medico: ruolare dolore per almeno <span class="hl">2 minuti</span>.</li>
+        <li>Assecondare il medico se porta il player in ospedale per approfondire l'RP.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Maschere & Identità</h3>
+      <ul>
+        <li>Maschera integrale: <span class="hl">anonimato totale</span> (anche voce).</li>
+        <li>Vestiti non sono prova d'identità.</li>
+        <li>Bandana gang = maschera integrale.</li>
+        <li>Scaldacollo: tratti somatici riconoscibili — no anonimato.</li>
+        <li>Riconoscimento con maschera solo da background stretto (marito/moglie, figlio/a).</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Combattimento & Armi</h3>
+      <ul>
+        <li>Vietato portare un <span class="hl">secondo giubbotto antiproiettile</span> (anche Polizia).</li>
+        <li>Vietato sparare da veicolo salvo NoFear estremo.</li>
+        <li>Solo <span class="hl">un'arma lunga</span> montata per volta.</li>
+        <li>Max <span class="hl">2 pistole</span> o una automatica/semiautomatica. Con zaino: limite peso.</li>
+        <li>Cartello, F.I.B., D.E.A., Governo possono portarne il doppio senza zaino.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>GoPro & Registrazioni</h3>
+      <ul>
+        <li>GoPro è item RP. Distruzione scheda SSD: video non valido come prova IC.</li>
+        <li>Registrazione audio valida solo con <em>/me accende registratore vocale</em>.</li>
+        <li>Cellulare non deve essere rimosso/spento.</li>
+        <li>Mancanza prove = MetaGame.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Ingaggi & Inseguimenti</h3>
+      <ul>
+        <li>Non si può ingaggiare la polizia senza tentare prima la fuga.</li>
+        <li>Fazione perdente: comunicare subito la fine in chat azione.</li>
+        <li>Chi disingaggia deve comunicarlo.</li>
+        <li>Vietate le <span class="hl">chiamate bait</span> ad attività, lavori, FDO generali.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rule-block" style="margin-top:16px">
+    <h3>Loot LSPD (AGGIORNATO)</h3>
+    <div class="cols-2">
+      <div>
+        <p style="margin-bottom:8px; color:var(--accent); font-size:13px; letter-spacing:1px;">⬡ ZONE ROSSE</p>
+        <ul>
+          <li>Poliziotti lootabili di <span class="hl">colpi, radio e oggetti</span>.</li>
+          <li>Armi lootabili solo se impugnano la <span class="hl">9mm</span>.</li>
+        </ul>
+      </div>
+      <div>
+        <p style="margin-bottom:8px; color:var(--accent2); font-size:13px; letter-spacing:1px;">⬡ FREEROAM</p>
+        <ul>
+          <li><span class="hl-red">MAI lootabili.</span></li>
+          <li>Possibile solo distruggere dispositivi via /me.</li>
+          <li><strong>ECCEZIONE:</strong> Senza colpi durante azione non finita → 30 colpi da agente a terra.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-block">
+    <h3>Limiti Disingaggio</h3>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:8px">
+      <div style="background:var(--bg3); border:1px solid var(--border); padding:14px 24px; text-align:center;">
+        <div style="font-family:'Bebas Neue'; font-size:36px; color:var(--accent);">500m</div>
+        <div style="font-size:12px; color:var(--text-dim); letter-spacing:1px;">FREEROAM</div>
+      </div>
+      <div style="background:var(--bg3); border:1px solid var(--border); padding:14px 24px; text-align:center;">
+        <div style="font-family:'Bebas Neue'; font-size:36px; color:var(--accent);">300m</div>
+        <div style="font-size:12px; color:var(--text-dim); letter-spacing:1px;">RAPINE</div>
+      </div>
+      <div style="background:var(--bg3); border:1px solid var(--border); padding:14px 24px; text-align:center;">
+        <div style="font-family:'Bebas Neue'; font-size:36px; color:var(--accent);">500m</div>
+        <div style="font-size:12px; color:var(--text-dim); letter-spacing:1px;">CAMPI DROGA</div>
+      </div>
+    </div>
+    <p style="margin-top:12px; font-size:14px; color:var(--accent2);">⚠ Una volta fuori range, non si rientra.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PERMADEATH -->
+<section id="permadeath">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Permadeath & Wipe</h2>
+  </div>
+  <div class="alert alert-danger">
+    <span class="alert-icon">💀</span>
+    <div>
+      <div class="alert-title">Permadeath</div>
+      <p>Morte definitiva del personaggio. Richiede ticket con <strong>10 motivazioni</strong> — valutazione High Staff in 12-72 ore. Validità 5 giorni. Scena spectata da un Admin. Se il player smonta anche una sola motivazione in RP, il perma è annullato.</p>
+    </div>
+  </div>
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Procedure</h3>
+      <ul>
+        <li><strong>Defazionamento</strong>: 1 motivazione valida, ticket (3 giorni).</li>
+        <li><strong>Perma-Self</strong>: possibile senza storie in sospeso, senza fatture e con motivazione valida.</li>
+        <li><strong>Testamento</strong>: concesso se coerente, valutato tramite ticket.</li>
+        <li><strong>Perma-Jail</strong>: ergastolo — prevede wipe completo o RP in carcere.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Restrizioni Post-Perma</h3>
+      <ul>
+        <li>Non si può far parte della fazione precedente.</li>
+        <li>No parentele con vecchi contatti.</li>
+        <li>No ruolare con persone conosciute per <span class="hl">5 giorni</span> dal perma.</li>
+        <li><strong>Wipe mentale</strong>: obbligatorio uscendo dalla Polizia.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="rule-block">
+    <h3>Motivi Perma</h3>
+    <ul>
+      <li>Defazionamento</li>
+      <li>No Fear estremo</li>
+      <li>Per le teste del Cartello: valutazione High Staff</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VEICOLI SPECIALI -->
+<section id="veicoli">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Veicoli Speciali</h2>
+  </div>
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Elicotteri</h3>
+      <ul>
+        <li>Atterraggi solo in zone sicure/realistiche.</li>
+        <li>Vietato iniziare ingaggi da mezzi aerei o acquatici.</li>
+        <li>Vietato sparare da mezzi aerei.</li>
+        <li>Dalle barche: solo se ingaggiati per primi.</li>
+        <li>Obbligatorio possedere l'<span class="hl">attestato</span>. Volare senza = No Fear estremo.</li>
+        <li>Vietati alle rapine e ai campi droga.</li>
+        <li>Se colpiti da molti colpi: <span class="hl">atterraggio d'emergenza</span> obbligatorio. Ripartenza dopo 5 min di riparazione.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Cecchino</h3>
+      <p>Usabile <span class="hl">solo tramite ticket</span> per azioni "incontri" e "assalti pianificati". Massimo <span class="hl">1 per fazione</span>.</p>
+      <br>
+      <h3>Blindati</h3>
+      <p>Uso giustificato, ma alza il livello del DEF.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RAPIMENTI -->
+<section id="rapimenti">
+  <div class="section-header">
+    <span class="section-number">06</span>
+    <h2 class="section-title">Azioni Rapimento</h2>
+  </div>
+
+  <div class="alert alert-danger">
+    <span class="alert-icon">🚫</span>
+    <div>
+      <div class="alert-title">Vietato Sequestrare</div>
+      <p>Nuovi player, medici, meccanici o lavoratori WL.</p>
+    </div>
+  </div>
+  <div class="alert alert-warning">
+    <span class="alert-icon">⚠</span>
+    <div>
+      <div class="alert-title">Rapimento Poliziotto</div>
+      <p>Deve avvenire solo tramite ticket. Se rapito senza ticket: <strong>Ban 3 giorni</strong>.</p>
+    </div>
+  </div>
+
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Regole</h3>
+      <ul>
+        <li>Durata max <span class="hl">90 minuti</span> (prolungabile per RP coerente). Fino a 48h solo con ticket.</li>
+        <li>Per far dimenticare l'accaduto: item "<span class="hl">pillola</span>".</li>
+        <li>Svenimento: non fa perdere la memoria (recupero 30 min dal risveglio).</li>
+        <li>Obbligo di riconsegnare SIM e telefoni a fine rapimento.</li>
+        <li>Se rapitori usano /me controlla telefono: il rapito non può mentire su contatti/dark chat.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Limiti Riscatti</h3>
+      <div style="display:grid; gap:8px; margin-top:4px">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 16px; background:var(--bg3); border:1px solid var(--border)">
+          <span style="font-size:14px; color:var(--text-dim)">Cittadini</span>
+          <span style="font-family:'Share Tech Mono'; color:var(--accent); font-size:15px">$20.000</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 16px; background:var(--bg3); border:1px solid var(--border)">
+          <span style="font-size:14px; color:var(--text-dim)">F.D.O.</span>
+          <span style="font-family:'Share Tech Mono'; color:var(--accent); font-size:15px">$50.000</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 16px; background:var(--bg3); border:1px solid rgba(232,200,74,0.4)">
+          <span style="font-size:14px; color:#fff">Direttore / F.D.O. Alto Comando</span>
+          <span style="font-family:'Share Tech Mono'; color:var(--accent); font-size:15px">$250.000</span>
+        </div>
+      </div>
+      <br>
+      <h3>Requisiti Minimi</h3>
+      <ul>
+        <li>Banditi: min <span class="hl">5</span> persone.</li>
+        <li>Sequestri civili: <span class="hl">4 poliziotti</span> online.</li>
+        <li>Sequestri FDO: <span class="hl">6 poliziotti</span> online.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FREEROAM -->
+<section id="freeroam">
+  <div class="section-header">
+    <span class="section-number">07</span>
+    <h2 class="section-title">Azioni Freeroam</h2>
+  </div>
+
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px">
+    <div style="flex:1; min-width:180px; background:var(--bg3); border:1px solid var(--border); border-top:3px solid var(--accent2); padding:20px; text-align:center;">
+      <div style="font-size:12px; color:var(--text-dim); letter-spacing:2px; margin-bottom:8px;">CRIMINALI</div>
+      <div style="font-family:'Bebas Neue'; font-size:56px; color:var(--accent2); line-height:1;">8</div>
+      <div style="font-size:11px; color:var(--text-dim);">player max</div>
+    </div>
+    <div style="flex:1; min-width:180px; background:var(--bg3); border:1px solid var(--border); border-top:3px solid var(--accent3); padding:20px; text-align:center;">
+      <div style="font-size:12px; color:var(--text-dim); letter-spacing:2px; margin-bottom:8px;">POLIZIA</div>
+      <div style="font-family:'Bebas Neue'; font-size:56px; color:var(--accent3); line-height:1;">12</div>
+      <div style="font-size:11px; color:var(--text-dim);">player max</div>
+    </div>
+  </div>
+
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Regole Ingaggio</h3>
+      <ul>
+        <li>Solo <span class="hl">pistole</span>. Nessun casco.</li>
+        <li>Richiede motivo valido (inseguimento >3 min, scontro verbale serio).</li>
+        <li>Dopo 5 PIT si può sparare.</li>
+        <li>Solo due fazioni (+ Polizia). Terza fazione: consegnarsi al gruppo ingaggiato.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Disingaggio & Fine</h3>
+      <ul>
+        <li>Oltre <span class="hl">300m</span> dal punto d'ingaggio.</li>
+        <li>Dichiarare in chat azione. Una volta dichiarato: no rientro per 30 min.</li>
+        <li>Fine azione: chiedere "finita" o attendere 3 min di silenzio balistico.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rule-block">
+    <h3>Loot Freeroam</h3>
+    <ul>
+      <li>Consentito solo alla fazione ingaggiata.</li>
+      <li>Lootabile: <span class="hl">pistola, colpi, bende</span> e 1 cibo/acqua (se indispensabile).</li>
+      <li>Altro loot solo dopo aver chiesto "finita" 3 volte.</li>
+      <li>Polizia: vietato lootare (salvo eccezione 30 colpi / dispositivi via /me).</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SAFEZONE -->
+<section id="safezone">
+  <div class="section-header">
+    <span class="section-number">08</span>
+    <h2 class="section-title">Safe Zone & Semi-Safe Zone</h2>
+  </div>
+  <div class="cols-2">
+    <div class="rule-block" style="border-left:3px solid #4dff88;">
+      <h3 style="color:#4dff88;">⬡ Safe Zone</h3>
+      <p style="margin-bottom:10px; font-size:13px; color:var(--text-dim);">Nessuna sparatoria, rapimento o rifugio da azioni esterne.</p>
+      <ul>
+        <li>Ospedale</li>
+        <li>Elettronica, Vestiti, Barbiere, Tatuatori</li>
+        <li>Garage Centrale</li>
+        <li>Fleeca (206)</li>
+        <li>Case Popolari (348)</li>
+        <li>Chiesa</li>
+      </ul>
+    </div>
+    <div class="rule-block" style="border-left:3px solid var(--accent);">
+      <h3 style="color:var(--accent);">⬡ Semi-Safe Zone</h3>
+      <p style="margin-bottom:10px; font-size:13px; color:var(--text-dim);">Assalti solo con autorizzazione ticket con motivazione coerente.</p>
+      <ul>
+        <li>Centrale Polizia</li>
+        <li>Tribunale</li>
+        <li>Attività (solo parcheggi annessi)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ASSALTI -->
+<section id="assalti">
+  <div class="section-header">
+    <span class="section-number">09</span>
+    <h2 class="section-title">Assalti & Ghetti</h2>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fazione</th>
+          <th>Centrale Polizia</th>
+          <th>Convoglio Processo</th>
+          <th>Casa Fazione</th>
+          <th>Ghetti</th>
+          <th>Attività</th>
+          <th>Caschi</th>
+          <th>Armi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Polizia</strong></td>
+          <td>—</td>
+          <td>15</td>
+          <td>20</td>
+          <td>15</td>
+          <td>10</td>
+          <td><span class="badge badge-yes">SI</span></td>
+          <td><span class="badge badge-any">QUALUNQUE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Criminali</strong></td>
+          <td>20</td>
+          <td>12</td>
+          <td>15</td>
+          <td>12</td>
+          <td>10</td>
+          <td><span class="badge badge-yes">SI</span></td>
+          <td>Pistole & Micro Uzi (ghetti); Pistole & SMG (attività)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Regole Assalti</h3>
+      <div class="alert alert-danger" style="margin-bottom:14px; margin-top:8px">
+        <span class="alert-icon">💀</span>
+        <div>
+          <div class="alert-title">Assalto PERMADEATH <span style="font-family:'Share Tech Mono';font-size:10px;letter-spacing:2px;opacity:0.6;margin-left:8px;">CHANGELOG #5 — 21/03/26</span></div>
+          <p>Ticket obbligatorio con almeno <strong>5 motivazioni RP</strong> e <strong>prove video allegate</strong>. Chi perde subisce il Permadeath. Validità 48h dall'approvazione.</p>
+        </div>
+      </div>
+      <div class="alert alert-warning" style="margin-bottom:14px">
+        <span class="alert-icon">⚔</span>
+        <div>
+          <div class="alert-title">Assalto NON PERMADEATH <span style="font-family:'Share Tech Mono';font-size:10px;letter-spacing:2px;opacity:0.6;margin-left:8px;">CHANGELOG #5 — 21/03/26</span></div>
+          <p>Ticket con almeno <strong>3 motivazioni RP</strong> valide. Nessun Permadeath per i partecipanti.</p>
+        </div>
+      </div>
+      <ul>
+        <li>Chi difende casa fazione o ghetto: <span class="hl">nessun limite di player</span>.</li>
+        <li>Centrale: richiede almeno <span class="hl">12 poliziotti</span> in servizio per essere assaltata.</li>
+        <li>FDO vincenti possono richiedere l'<span class="hl">ergastolo</span>.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Guerra Ghetti</h3>
+      <ul>
+        <li>Non sono assalti permadeath.</li>
+        <li>Richiedono dichiarazione via ticket con min <span class="hl">3 motivazioni RP</span> valide.</li>
+        <li>FDO possono avviare azioni (es. assalto locale) senza ticket solo in flagranza di reato.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RAPINE -->
+<section id="rapine">
+  <div class="section-header">
+    <span class="section-number">10</span>
+    <h2 class="section-title">Rapine & Furti</h2>
+  </div>
+
+  <div class="cols-2" style="margin-bottom:20px">
+    <div class="rule-block">
+      <h3>Regole Generali</h3>
+      <ul>
+        <li>Contrattazione: min <span class="hl">5 minuti</span> dall'arrivo Polizia. No fuoco prima della fine trattativa.</li>
+        <li>Fuga: vietate le moto alle rapine negozietti (pena: sequestro mezzo).</li>
+        <li>Incursione: possibile dopo <span class="hl">15 min di stallo</span>.</li>
+        <li>Una rapina ogni <span class="hl">20 minuti</span>.</li>
+        <li>Obbligatoria arma da fuoco (altrimenti No Fear).</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Note</h3>
+      <ul>
+        <li>Vietato rapinare lavoratori No WL nel tragitto da/per import o durante deposito soldi.</li>
+        <li>Looting vietato se non si ha fatto parte dell'azione specifica.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo Rapina</th>
+          <th>Criminali/Polizia</th>
+          <th>Armi Max</th>
+          <th>Casco</th>
+          <th>Ostaggi</th>
+          <th>Esterni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Negozietti</strong></td>
+          <td>2 vs 2</td>
+          <td>Pistole</td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+        </tr>
+        <tr>
+          <td><strong>Ponsonbys</strong></td>
+          <td>3 vs 3</td>
+          <td>Pistole tutte</td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+        </tr>
+        <tr>
+          <td><strong>Gabriella</strong></td>
+          <td>3 vs 3</td>
+          <td>Pistole tutte</td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+        </tr>
+        <tr>
+          <td><strong>Fleeca</strong></td>
+          <td>4 vs 4</td>
+          <td>SMG</td>
+          <td><span class="badge badge-yes">SI</span></td>
+          <td>Max 2</td>
+          <td><span class="badge badge-no">NO</span></td>
+        </tr>
+        <tr>
+          <td><strong>Gioielleria</strong></td>
+          <td>4 vs 5</td>
+          <td>SMG</td>
+          <td><span class="badge badge-yes">SI</span></td>
+          <td>Max 2</td>
+          <td><span class="badge badge-no">NO</span></td>
+        </tr>
+        <tr>
+          <td><strong>Blaine</strong></td>
+          <td>5 vs 6</td>
+          <td>SMG e P90</td>
+          <td><span class="badge badge-yes">SI</span></td>
+          <td>Max 3</td>
+          <td>1 — max 300m</td>
+        </tr>
+        <tr>
+          <td><strong>Pacific</strong></td>
+          <td>15 vs 16</td>
+          <td>Carabine</td>
+          <td><span class="badge badge-yes">SI</span></td>
+          <td>Min 2, Max 4</td>
+          <td>1 — max 300m</td>
+        </tr>
+        <tr>
+          <td><strong>Furto Veicolo</strong></td>
+          <td>2 vs 2</td>
+          <td>Pistole tutte</td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+        </tr>
+        <tr>
+          <td><strong>Furto Casa / ATM</strong></td>
+          <td>2 vs 2</td>
+          <td>Pistole tutte</td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+          <td><span class="badge badge-no">NO</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ZONE ROSSE -->
+<section id="droga">
+  <div class="section-header">
+    <span class="section-number">11</span>
+    <h2 class="section-title">Zone Rosse — Droga</h2>
+  </div>
+
+  <div class="alert alert-danger">
+    <span class="alert-icon">☠</span>
+    <div>
+      <div class="alert-title">Metagame Zone Rosse</div>
+      <p>Sostare in zone rosse senza info ticket = <strong>Ban 48h / Last Chance.</strong></p>
+    </div>
+  </div>
+
+  <div class="cols-2" style="margin-bottom:20px">
+    <div class="rule-block">
+      <h3>Regole</h3>
+      <ul>
+        <li>Conoscenza zone: solo tramite prova via ticket accettata dallo staff.</li>
+        <li>Vietato lootare Divisa, Divisa Swat, Distintivo, Taser.</li>
+        <li>Camping vietato (Fail RP/Warn).</li>
+        <li>Mezzi obbligatori: <span class="hl">furgoni, pick up, camion</span>. No SUV/berline nel baule.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Zona</th>
+              <th>Criminali</th>
+              <th>Polizia</th>
+              <th>Armi</th>
+              <th>Casco</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Marijuana</strong></td>
+              <td>6</td>
+              <td>6</td>
+              <td>Pistole</td>
+              <td><span class="badge badge-no">NO</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cocaina</strong></td>
+              <td>10</td>
+              <td>12</td>
+              <td>Tutte</td>
+              <td><span class="badge badge-yes">SI</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-block">
+    <h3>Zone di Spaccio</h3>
+    <ul>
+      <li>Gestita da gang con presenza e tag.</li>
+      <li>Conquista: attacco possibile <span class="hl">una volta ogni 3 giorni</span>. Gang sconfitta può riprovare dopo 24h.</li>
+      <li>Se interviene la polizia, le gang possono unirsi contro di essa.</li>
+      <li>Solo le gang possono conquistare zone di spaccio.</li>
+      <li>Range area scontro: <span class="hl">250m</span>.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAZIONI -->
+<section id="fazioni">
+  <div class="section-header">
+    <span class="section-number">12</span>
+    <h2 class="section-title">Fazioni & Criminalità</h2>
+  </div>
+
+  <div class="rule-block" style="border-top:3px solid #e8c84a; margin-bottom:24px">
+    <h3>Il Cartello</h3>
+    <ul>
+      <li><span class="hl">Autorità suprema</span> IC & OOC. Quando organizza la criminalità, agisce in ambito OOC.</li>
+      <li>Zone fuori confini: <span class="hl">Cayo Perico</span> e <span class="hl">Villa Madrazo</span>.</li>
+      <li>Poteri: arresti, confische, sequestri, interventi armati senza limiti.</li>
+      <li>Monopolio su armi, droga e pizzo. Armi pesanti senza autorizzazione Cartello = Fail RP/No Fear.</li>
+    </ul>
+  </div>
+
+  <div class="rule-block">
+    <h3>Regole Fazioni</h3>
+    <ul>
+      <li>Rispettare background e attività costante.</li>
+      <li>Uscire dalla fazione non dà diritto di infamare senza motivazioni ticket.</li>
+      <li>Mafia: max <span class="hl">2 gang</span> sotto influenza. Ogni collaborazione approvata via ticket.</li>
+      <li><strong>Snitching</strong>: solo con motivazione RP (rapimento/interrogatorio con fear). Richiede info convalidate. Senza motivo: annullamento azione + Ban Armi.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GANG & MAFIA -->
+<section id="gang">
+  <div class="section-header">
+    <span class="section-number">13</span>
+    <h2 class="section-title">Gang & Mafia</h2>
+  </div>
+
+  <div class="cols-2">
+    <div class="rule-block" style="border-top:3px solid var(--accent2)">
+      <h3>Regolamento Gang</h3>
+      <ul>
+        <li>Minimo <span class="hl">6 player</span>.</li>
+        <li>Bandane: segno riconoscitivo obbligatorio. Spacciarsi per altra gang = <span class="hl-red">Wipe PG</span>.</li>
+        <li>Ticket con nome, BG, luogo, gerarchia e rappresentanti per ufficialità.</li>
+        <li>Risse: no armi da fuoco, no loot (anche in zone safe).</li>
+        <li><strong>Drive-by</strong>: solo moto/bici. Vietato sparare alle persone (solo edifici/auto). Ferimento volontario = RDM.</li>
+        <li>Scalata a Mafia: min <span class="hl">60 giorni</span> come gang + coerenza + dichiarazione guerra via ticket.</li>
+      </ul>
+    </div>
+    <div class="rule-block" style="border-top:3px solid var(--accent3)">
+      <h3>Fazione Mafia</h3>
+      <ul>
+        <li>Minimo <span class="hl">10 player</span>.</li>
+        <li>Presentarsi obbligatoriamente al Cartello.</li>
+        <li>Una sola attività legale associata. No prestanome.</li>
+        <li>Una mafia può avere sotto di sé <span class="hl">solo 2 gang ufficiali</span>.</li>
+        <li>Una mafia non può assaltare un ghetto direttamente.</li>
+        <li>Declassamento a gang possibile dal Cartello per RP inadeguato.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rule-block">
+    <h3>Background Mafia Richiesto</h3>
+    <div class="cols-2">
+      <div>
+        <p style="color:var(--accent); font-size:13px; letter-spacing:1px; margin-bottom:8px;">PARTE IC</p>
+        <ul>
+          <li>Nome e storia della fazione</li>
+          <li>Descrizione attuale e carattere RP</li>
+          <li>Scopo in RP</li>
+          <li>Gerarchia completa</li>
+          <li>Nomi dei 3 rappresentanti principali</li>
+        </ul>
+      </div>
+      <div>
+        <p style="color:var(--accent3); font-size:13px; letter-spacing:1px; margin-bottom:8px;">PARTE OOC</p>
+        <ul>
+          <li>Civico della casa richiesta</li>
+          <li>Due tipologie di mezzi per il garage</li>
+          <li>Veicoli coerenti con lo stile della fazione</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FDO -->
+<section id="fdo">
+  <div class="section-header">
+    <span class="section-number">14</span>
+    <h2 class="section-title">Forze dell'Ordine</h2>
+  </div>
+
+  <!-- LSPD -->
+  <div class="faction-header">
+    <div class="faction-name">LSPD <span>&</span> LSSD</div>
+    <div class="faction-sub">LOS SANTOS POLICE DEPARTMENT — SHERIFF'S DEPARTMENT</div>
+  </div>
+  <div class="cols-2" style="margin-bottom:24px">
+    <div class="rule-block">
+      <h3>Obblighi Generali</h3>
+      <ul>
+        <li>Body Cam attiva per tutto il tempo in servizio.</li>
+        <li>Rispettare il codice della strada.</li>
+        <li>Vietato girare mascherati (salvo permesso governo + responsabile FDO).</li>
+        <li>Dopo ogni azione (se incolumi): obbligo di chiamare i medici.</li>
+        <li>Vietato aprire il fuoco per primi se non ingaggiati.</li>
+        <li>Un agente può arrestare un criminale per max <span class="hl">30 minuti</span>.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Corruzione</h3>
+      <ul>
+        <li>RP da poliziotto corrotto: ticket con 5 motivazioni valide.</li>
+        <li>Requisiti: agente da almeno <span class="hl">30 giorni</span> + background coerente.</li>
+        <li>Non corruttibili: reclute e alto comando.</li>
+        <li>Due tipi: a favore polizia o a favore criminalità.</li>
+        <li>Scoperto: processo automatico, rischio ergastolo.</li>
+        <li>Vietato entrare in polizia con lo scopo di diventare corrotto.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FIB -->
+  <div class="faction-header">
+    <div class="faction-name">F.I.B. <span>—</span> Federal Investigation Bureau</div>
+    <div class="faction-sub">INDAGINI FEDERALI — CRIMINALITÀ ORGANIZZATA</div>
+  </div>
+  <div class="rule-block" style="margin-bottom:24px">
+    <h3>Operatività</h3>
+    <ul>
+      <li>Può decriptare <span class="hl">3 messaggi al giorno</span> in /anon o /chatfazione (hacking min 5 min).</li>
+      <li>Agente può infiltrarsi in una gang tramite ticket accettato. Se scoperto: possibile wipe.</li>
+      <li>Maschera consentita in servizio solo con permesso governativo o Federal Commander.</li>
+      <li>Corruttibili (eccetto reclute e alto comando). Alla dimissione: wipe mentale obbligatorio.</li>
+    </ul>
+  </div>
+
+  <!-- DEA -->
+  <div class="faction-header">
+    <div class="faction-name">D.E.A. <span>—</span> Drug Enforcement Administration</div>
+    <div class="faction-sub">CONTRASTO AL NARCOTRAFFICO</div>
+  </div>
+  <div class="rule-block" style="margin-bottom:24px">
+    <h3>Operatività</h3>
+    <ul>
+      <li>Operazioni sotto copertura solo con autorizzazione ticket.</li>
+      <li>Può decriptare <span class="hl">1 messaggio al giorno</span> in /anon o /chatfazione.</li>
+      <li>Prove e sequestri vanno catalogati e consegnati all'US Army.</li>
+      <li>Corruttibili (eccetto reclute e alto comando).</li>
+    </ul>
+  </div>
+
+  <!-- IAA -->
+  <div class="faction-header">
+    <div class="faction-name">I.A.A. <span>—</span> Agenzia di Sicurezza Nazionale</div>
+    <div class="faction-sub">ORGANO GOVERNATIVO SEGRETO</div>
+  </div>
+  <div class="rule-block" style="margin-bottom:24px">
+    <h3>Operatività</h3>
+    <ul>
+      <li>Può infiltrarsi nelle fazioni criminali per max <span class="hl">7 giorni</span>.</li>
+      <li>Opera esclusivamente in suolo americano.</li>
+      <li>Può decriptare <span class="hl">1 messaggio al giorno</span>.</li>
+      <li>Interrogatori con tecniche speciali: max <span class="hl">3 a settimana</span>.</li>
+      <li><span class="hl-red">Nessun agente I.A.A. può essere corrotto.</span></li>
+      <li>Può svolgere azioni criminali solo se infiltrato, mai omicidi o uso droghe.</li>
+    </ul>
+  </div>
+
+  <!-- TASK FORCE -->
+  <div class="faction-header">
+    <div class="faction-name">Task Force <span>—</span> Unità Speciale</div>
+    <div class="faction-sub">INTERVENTI AD ALTO RISCHIO</div>
+  </div>
+  <div class="rule-block">
+    <h3>Operatività</h3>
+    <ul>
+      <li>Attivata <span class="hl">SOLO</span> su richiesta di altra FDO o ordine del comando superiore.</li>
+      <li>Non agisce autonomamente in situazioni ordinarie.</li>
+      <li>Solo borghese (salvo azioni autorizzate). No supporto in Freeroam.</li>
+      <li>Pacific: unica rapina a cui partecipano per coordinare le FDO.</li>
+      <li>Abilitati a rapimenti/assalti per interrogatori RP.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ALTRO -->
+<section id="altro">
+  <div class="section-header">
+    <span class="section-number">15</span>
+    <h2 class="section-title">Medici, Economia & Tecnico</h2>
+  </div>
+
+  <div class="cols-2">
+    <div class="rule-block">
+      <h3>Medici & Lavori</h3>
+      <ul>
+        <li>Segreto professionale obbligatorio.</li>
+        <li>Taser unico mezzo di difesa.</li>
+        <li>No secondo lavoro WL.</li>
+        <li>Locali: apertura min 3h/giorno (6h per Import/Armeria).</li>
+        <li>No maschere nei locali.</li>
+        <li>Fondo cassa non utilizzabile per illegale (pena: sequestro attività/permajail).</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Bilanciamento Economia</h3>
+      <ul>
+        <li>Possedere più di <span class="hl">5 milioni</span>: giustifica obbligatoria anche OOC.</li>
+        <li>Staff può effettuare controlli economici OOC in qualsiasi momento.</li>
+        <li>Rifiuto o mancanza collaborazione = sospensione immediata.</li>
+        <li>Tutte le transazioni sospette possono essere indagate retroattivamente.</li>
+        <li>Scioglimento fazione: soldi e depositi <span class="hl-red">resettati</span>. Distribuzioni non autorizzate = ban perma.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Anticheat & Tecnico</h3>
+      <ul>
+        <li>Vietate Citizen con danni boostati, bush, bush 2D.</li>
+        <li>Vietati cleaner, bypass, spoofer (Eulen), programmi latenza (Xlag).</li>
+        <li>Vietato cancellare file/clip FiveM prima di 2 giorni o prima di un controllo.</li>
+        <li>Quittare/crashare dopo chiamata staff = <span class="hl-red">PERMABAN</span>.</li>
+      </ul>
+    </div>
+    <div class="rule-block">
+      <h3>Giustizia & Governo</h3>
+      <ul>
+        <li>Avvocati: esame con Procuratore. Parcella base 20k pagata dal governo.</li>
+        <li>Corruzione avvocati: possibile dopo 15 giorni, tramite ticket Head Admin.</li>
+        <li>Governatore/Procuratore: incorruttibili.</li>
+        <li>Attaccare strutture governo = Permajail.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-logo">Ethern<span>RP</span></div>
+  <p>REGOLAMENTO UFFICIALE — AGGIORNATO AL 21/03/2026</p>
+  <p style="margin-top:6px">TUTTI I DIRITTI RISERVATI — STAFF ETHERNRP</p>
+</footer>
+
+<!-- CREDITS -->
+<div style="position:relative;z-index:2;padding:28px 20px 40px;text-align:center;overflow:hidden;">
+
+  <div style="display:inline-flex;flex-direction:column;align-items:center;gap:10px;opacity:0.55;transition:opacity 0.4s;" id="sig-wrap" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.55'">
+
+    <!-- thin divider -->
+    <div style="display:flex;align-items:center;gap:14px;width:260px;">
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,120,20,0.5));"></div>
+      <span style="font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:rgba(255,120,20,0.6);">CREDITS</span>
+      <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(255,120,20,0.5),transparent);"></div>
+    </div>
+
+    <!-- signature row -->
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:9px;color:rgba(255,120,20,0.4);font-family:'Share Tech Mono',monospace;letter-spacing:3px;">redatto da</span>
+      <span style="
+        font-family:'Bebas Neue',sans-serif;
+        font-size:22px;
+        letter-spacing:5px;
+        color:#ff7a1a;
+        text-shadow: 0 0 12px rgba(255,100,0,0.5);
+        position:relative;
+      ">ALESTRYX<span style="position:absolute;bottom:-1px;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,120,20,0.6),transparent);"></span></span>
+      <span style="width:4px;height:4px;background:#ff7a1a;border-radius:50%;box-shadow:0 0 6px rgba(255,100,0,0.8);animation:blink 2s infinite;"></span>
+    </div>
+
+  </div>
+
+</div>
+
+<a href="#" class="btt" title="Torna in cima">↑</a>
+
+<script>
+  // ── EMBER PARTICLES ──
+  (function(){
+    var canvas = document.getElementById('ember-canvas');
+    var ctx = canvas.getContext('2d');
+    var W, H, embers = [];
+    function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    function mkEmber(){
+      return { x: Math.random()*W, y: H+10,
+        vx:(Math.random()-0.5)*1.4, vy:-(Math.random()*2.2+0.7),
+        r:Math.random()*2.2+0.4, life:1, decay:Math.random()*0.009+0.004,
+        warm: Math.random() > 0.5 };
+    }
+    function init(){ embers=[]; for(var i=0;i<70;i++){ var e=mkEmber(); e.y=Math.random()*H; e.life=Math.random(); embers.push(e); } }
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      if(Math.random()<0.35) embers.push(mkEmber());
+      for(var i=embers.length-1;i>=0;i--){
+        var e=embers[i];
+        e.x += e.vx + Math.sin(e.y*0.025)*0.4;
+        e.y += e.vy;
+        e.life -= e.decay;
+        if(e.life<=0||e.y<-10){ embers.splice(i,1); continue; }
+        var a=e.life*0.9;
+        ctx.beginPath();
+        ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+        ctx.fillStyle = e.warm
+          ? 'rgba(255,'+ Math.floor(140+e.life*80) +',0,'+a+')'
+          : 'rgba(255,'+ Math.floor(60+e.life*60) +',0,'+a+')';
+        ctx.shadowColor='rgba(255,70,0,'+a*0.7+')';
+        ctx.shadowBlur=8;
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    window.addEventListener('resize',function(){resize();init();});
+    resize(); init(); draw();
+  })();
+
+
+  // Staggered section animations on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.animationDelay = '0s';
+        e.target.style.animationPlayState = 'running';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  document.querySelectorAll('section').forEach(s => {
+    s.style.animationPlayState = 'paused';
+    observer.observe(s);
+  });
+</script>
+</body>
+</html>
